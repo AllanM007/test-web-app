@@ -20,7 +20,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// routes
-	e.POST("/", addTickets)
+	e.POST("/", orderFlights)
 
 	// start server
 	if err := e.Start(":8080"); err != nil && !errors.Is(err, http.ErrServerClosed) {
@@ -29,7 +29,7 @@ func main() {
 
 }
 
-func addTickets(ctx echo.Context) error {
+func orderFlights(ctx echo.Context) error {
 
 	var tickets FlightTicketsPayload
 	if err := ctx.Bind(&tickets); err != nil {
@@ -42,6 +42,10 @@ func addTickets(ctx echo.Context) error {
 }
 
 func orderItinerary(tickets [][]string) []string {
+
+	if len(tickets) == 0 {
+		return []string{}
+	}
 	routeMap := make(map[string]string)
 	destinationMap := make(map[string]bool)
 
