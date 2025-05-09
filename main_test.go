@@ -22,7 +22,7 @@ func TestOrderItinerary(t *testing.T) {
 			expected: []string{"JFK", "LAX", "DXB", "SFO", "SJC"},
 		},
 		{
-			name: "One Ticket",
+			name: "One Input",
 			tickets: [][]string{
 				{"NBO", "LAX"},
 			},
@@ -39,8 +39,11 @@ func TestOrderItinerary(t *testing.T) {
 				{"A", "B"},
 				{"C", "D"},
 				{"B", "C"},
+				{"F", "G"},
+				{"E", "F"},
+				{"D", "E"},
 			},
-			expected: []string{"A", "B", "C", "D"},
+			expected: []string{"A", "B", "C", "D", "E", "F", "G"},
 		},
 	}
 
