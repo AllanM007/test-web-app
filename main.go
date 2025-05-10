@@ -43,12 +43,16 @@ func orderFlights(ctx echo.Context) error {
 
 func orderItinerary(tickets [][]string) []string {
 
+	//check for empty tickets payload
 	if len(tickets) == 0 {
 		return []string{}
 	}
+
+	//create maps to store routes & destinations
 	routeMap := make(map[string]string)
 	destinationMap := make(map[string]bool)
 
+	//loop through the tickets payload to populate routes & destinations maps
 	for _, ticket := range tickets {
 		from := ticket[0]
 		to := ticket[1]
@@ -56,6 +60,7 @@ func orderItinerary(tickets [][]string) []string {
 		destinationMap[to] = true
 	}
 
+	//check fo start of itinerary based on the source that doesn't appear as a destination
 	var start string
 	for from := range routeMap {
 		if !destinationMap[from] {
