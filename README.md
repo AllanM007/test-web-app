@@ -30,7 +30,7 @@ go test -v
 The app has a single endpoint which is accessible from making a POST request to the below url:
 
 ```
-http://127.0.0.1:8080/ticket
+http://127.0.0.1:8080/tickets/order
 ```
 using the example payload:
 ```json
