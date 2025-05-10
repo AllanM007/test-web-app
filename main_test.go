@@ -1,9 +1,34 @@
 package main
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"reflect"
+	"strings"
 	"testing"
+
+	"github.com/labstack/echo/v4"
+	"github.com/stretchr/testify/assert"
 )
+
+func TestOrderFlights(t *testing.T) {
+
+	flightsPayload := `[["LAX", "DXB"], ["JFK","LAX"],["SFO","SJC"],["DXB","SFO"]]`
+	itinerary := `["JFK","LAX","DXB","SFO","SJC"]`
+
+	e := echo.New()
+
+	req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(flightsPayload))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	// Assertions
+	if assert.NoError(t, orderFlights(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.JSONEq(t, itinerary, rec.Body.String())
+	}
+}
 
 func TestOrderItinerary(t *testing.T) {
 	testsArray := []struct {
