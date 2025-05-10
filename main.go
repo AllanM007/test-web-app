@@ -20,7 +20,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// routes
-	e.POST("/", orderFlights)
+	e.POST("/tickets/order", orderFlights)
 
 	// start server
 	if err := e.Start(":8080"); err != nil && !errors.Is(err, http.ErrServerClosed) {
