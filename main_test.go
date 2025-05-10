@@ -30,6 +30,20 @@ func TestOrderFlights(t *testing.T) {
 	}
 }
 
+func TestOrderFlights_NoPayload(t *testing.T) {
+	e := echo.New()
+
+	req := httptest.NewRequest(http.MethodPost, "/", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	// Assertions
+	if assert.NoError(t, orderFlights(c)) {
+		assert.Equal(t, http.StatusBadRequest, rec.Code)
+	}
+}
+
 func TestOrderItinerary(t *testing.T) {
 	testsArray := []struct {
 		name     string

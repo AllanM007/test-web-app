@@ -32,7 +32,7 @@ func main() {
 func orderFlights(ctx echo.Context) error {
 
 	var tickets FlightTicketsPayload
-	if err := ctx.Bind(&tickets); err != nil {
+	if err := ctx.Bind(&tickets); err != nil || len(tickets) == 0 {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid payload"})
 	}
 
